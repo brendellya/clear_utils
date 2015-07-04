@@ -1,0 +1,28 @@
+{
+  "name": "_utils",
+  "version": "0.1.0",
+  "description": "Javascript Utilities",
+  "main": "utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://brendellya@bitbucket.org/brendellya/_utils.git"
+  },
+  "keywords": [
+    "utilities",
+    "dates",
+    "storage",
+    "sessions"
+  ],
+  "author": "Brendellya Thomas",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-watch": "^4.2.4"
+  }
+}
