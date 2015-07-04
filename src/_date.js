@@ -89,12 +89,12 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example
-         * __.dates.print();
-         * __.dates.print('2015/03/25');
-         * __.dates.print(1433624248201);
-         *__.dates.print('05/02/2015 3:15:00 PM');
-         * __.dates.print('2015-03-25T12:00:00');
-         * __.dates.print('2015');
+         * __.date.print();
+         * __.date.print('2015/03/25');
+         * __.date.print(1433624248201);
+         *__.date.print('05/02/2015 3:15:00 PM');
+         * __.date.print('2015-03-25T12:00:00');
+         * __.date.print('2015');
          *
          */
         print: function (d) {
@@ -137,9 +137,9 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example:
-         * __.dates.setFuture('9/25/2018', {day: 3});
-         * __.dates.setFuture('10/1/2025', {day: 15}, 'string'));
-         *__.dates.setFuture('2025', {day: 2}, 'dateString');
+         * __.date.setFuture('9/25/2018', {day: 3});
+         * __.date.setFuture('10/1/2025', {day: 15}, 'string'));
+         *__.date.setFuture('2025', {day: 2}, 'dateString');
          *
          */
         setFuture: function (time, forward, format) {
@@ -171,9 +171,9 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example:
-         * __.dates.setPast('9/25/2012', {day: 3});
-         * __.dates.setPast('10/1/2014', {day: 15}, 'isoString'));
-         * __.dates.setPast('2015-05-25T12:00:00', {hour: 2})
+         * __.date.setPast('9/25/2012', {day: 3});
+         * __.date.setPast('10/1/2014', {day: 15}, 'isoString');
+         * __.date.setPast('2015-05-25T12:00:00', {hour: 2})
          *
          */
         setPast: function (time, backward, format) {
@@ -204,9 +204,9 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example
-         * __.dates.future({day : 3});
-         * __.dates.future({week: 1}, 'dateString');
-         * __.dates.future({month:  2, day: 4, hour: 18 });
+         * __.date.future({day : 3});
+         * __.date.future({week: 1}, 'dateString');
+         * __.date.future({month:  2, day: 4, hour: 18 });
          *
          */
         future: function (forward, format) {
@@ -239,9 +239,9 @@ exports.date = (function () {
          * @returns {{years: number, months: number, weeks: number, days: number, hours: number, minutes: number, seconds: number}}
          *
          * @example
-         * __.dates.since('2015');
-         * __.dates.since('2015-04');
-         * __.dates.since('2015-05-25T12:00:00');
+         * __.date.since('2015');
+         * __.date.since('2015-04');
+         * __.date.since('2015-05-25T12:00:00');
          *
          */
         since: function (time) {
@@ -268,8 +268,8 @@ exports.date = (function () {
          * @returns {{years: number, months: number, weeks: number, days: number, hours: number, minutes: number, seconds: number}}
          *
          * @example
-         * __.dates.until('07/01/2016');
-         * __.dates.until('2020');
+         * __.date.until('07/01/2016');
+         * __.date.until('2020');
          *
          */
         until: function (time) {
@@ -290,15 +290,15 @@ exports.date = (function () {
         /**
          * timeSince
          * @description Returns the highest segment of time since
-         * a set date. Similiar since dates.since() except, only one
+         * a set date. Similiar since date.since() except, only one
          * value is returned.
          *
          * @param time
          * @returns {*}
          *
          * @examples
-         * __.dates.timeSince('06/10/2014');
-         *__.dates.timeSince('2000');
+         * __.date.timeSince('06/10/2014');
+         *__.date.timeSince('2000');
          *
          */
         timeSince: function(time){
@@ -320,15 +320,15 @@ exports.date = (function () {
         /**
          * timeUntil
          * @description Returns the highest segment of time since
-         * a set date. Similiar since dates.since() except, only one
+         * a set date. Similiar since date.since() except, only one
          * value is returned.
          *
          * @param time
          * @returns {*}
          *
          * @example
-         * __.dates.timeUntil('2026');
-         * __.dates.timeUntil('2018-06');
+         * __.date.timeUntil('2026');
+         * __.date.timeUntil('2018-06');
          *
          */
         timeUntil: function(time){
