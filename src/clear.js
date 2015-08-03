@@ -22,6 +22,10 @@
     // __.Date Module
     obj.date = require('./_date').date;
 
+  // __.Cookie Module
+  obj.cookie = require('./_cookie').cookie;
+
+
 
     window.__ = obj;
 })();

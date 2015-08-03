@@ -1397,6 +1397,196 @@ process.chdir = function (dir) {
 },{"VCmEsw":4,"buffer":1}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
+ * Created by Brendellya on 6/1/2015.
+ */
+
+
+/* Cookies */
+exports.cookie = (function () {
+
+    var expiry = function (time) {
+        var d = new Date(time);
+        var expires = d.toUTCString();
+
+        return (expires !== 'Invalid Date') ? d.toUTCString() : null;
+    };
+    var trimStr = function (str) {
+        return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    };
+
+    return {
+        /*
+            Time Durations (seconds)
+         */
+        times: {
+            SECOND: 1,
+            MINUTE: 60,
+            HOUR: 3600,
+            DAY: 86400,
+            YEAR: 86400 * 365
+        },
+        /**
+         * cookie.set
+         * @description Creates a new cookie.
+         * Cookies values are encoded, json objects are stringified.
+         * Besides cookie name all other values are optional.
+         *
+         * @param {string} name
+         * @param {*} value
+         * @param {object} options
+         *
+         * @example
+         * __.cookie.set('status');  // sets value to "true"
+         * __.cookie.set('today', 'It's hot yo!', {expires: '12/31/2015', path: '/my-dir/' });
+         * __.cookie.set('flavor', 'chocolate', { maxAge: 86400, domain: '.example.com' });
+         */
+        set: function (name, value, options) {
+            if (!name && typeof name !== 'string') {
+                throw new Error('Cookie: Please enter a cookie name.');
+            }
+            var cookie;
+            options = options || {};
+
+            cookie = {
+                name: name,
+                value: (value !== undefined) ?
+                    (typeof value === 'object') ? encodeURIComponent(JSON.stringify(value)) : encodeURIComponent(value) : // Encode or stringify
+                    true,  // Default to "true"
+                expires: (options.expires) ? '; expires=' + expiry(options.expires) : '', // Default to session
+                maxAge: (options.maxAge)? '; max-age=' + options.maxAge : '',
+                path: (options.path) ? '; path=' + options.path : '; path=/',
+                domain: (options.domain) ? '; domain=' + options.domain : '', // Default to host
+                secure: (options.secure) ? '; secure' : ''
+            };
+
+            // Set Cookie
+            document.cookie = cookie.name + '=' + cookie.value
+                + cookie.expires + cookie.maxAge
+                + cookie.path + cookie.domain
+                + cookie.secure
+                + ';';
+        },
+
+        /**
+         * cookie.get
+         * @description Returns decoded cookie value if it exists.
+         * Used decode param to false, to retrieve encoded value.
+         *
+         * @param {string} name
+         * @param {boolean} decode
+         * @returns {string} cookie
+         *
+         * @example
+         * __.cookie.get("tea"); // Returns decode value
+         * __.cookie.get("url", false); // Returns encoded value
+         */
+        get: function (name, decode) {
+            var cookies = this.list(decode);
+            return cookies[name];
+        },
+
+        /**
+         * cookie.check
+         * @description Checks the existence of a cookie.
+         *
+         * @param {string} name
+         * @returns {boolean}
+         *
+         * @example
+         * __.cookie.check("cat"); // Returns true|false
+         *
+         */
+        check: function (name) {
+            var cookies = this.list();
+            return (cookies[name] && typeof cookies[name] === 'string')? true : false;
+        },
+
+        /**
+         * cookie.delete
+         * @description Deletes a single cookie by name
+         *
+         * @param {string} name
+         *
+         * @example
+         * __.cookie.delete("today");
+         *
+         */
+        delete: function (name) {
+            this.set(name, '', {maxAge: -1});
+        },
+
+        /**
+         * cookie.deleteAll
+         * @description Deletes all cookies
+         *
+         * @example
+         * __.cookie.deleteAll();
+         *
+         */
+        deleteAll: function () {
+            var cookies = this.list();
+            var arr = Object.keys(cookies) || [];
+
+            arr.forEach(function (c) {
+                this.delete(c);
+            }.bind(this));
+        },
+
+        /**
+         * cookie.list
+         * @description Displays all cookies as an object
+         * All values are decoded by default, add decode parameter
+         * to return encoded values.
+         *
+         * @param {boolean} decode
+         * @returns {object}
+         *
+         * @example
+         * __.cookie.list();
+         * __.cookie.list(false);
+         *
+         */
+        list: function (decode) {
+            var cookie = document.cookie;
+            var arr = (cookie.length && cookie.indexOf(';') > -1) ?
+                cookie.split(';') :  // Split multi-cookie length into array
+                (cookie.length) ? [cookie] : []; // Create array for single cookie or empty array
+            var obj = {};
+
+            if (!arr.length) return {};
+
+            arr.forEach(function(c){
+                var result = c.split('=');
+                obj[trimStr(result[0])] = (decode === false) ? result[1] : decodeURIComponent(result[1]);
+            });
+
+            return obj;
+        },
+
+        /**
+         * cookie.total
+         * @description Returns the total number of cookies
+         *
+         * @returns {number}
+         *
+         * @example
+         * __.cookie.total();
+         *
+         */
+        total: function(){
+            var cookies = this.list();
+            var keys = Object.keys(cookies) || [];
+
+            return keys.length;
+        }
+    }
+
+})();
+
+}).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/_cookie.js","/")
+},{"VCmEsw":4,"buffer":1}],6:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+/**
  * _utils repo
  * Dates Module
  *
@@ -1416,10 +1606,34 @@ process.chdir = function (dir) {
 
 
 exports.date = (function () {
-    var months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+    ];
+    var days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+    ];
 
+    /*
+        Truncate full months/days
+        create a new array
+     */
     var truncate = function(str){
         return str.slice(0, 3);
     };
@@ -1463,16 +1677,17 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example
-         * __.dates.print();
-         * __.dates.print('2015/03/25');
-         * __.dates.print(1433624248201);
-         *__.dates.print('05/02/2015 3:15:00 PM');
-         * __.dates.print('2015-03-25T12:00:00');
-         * __.dates.print('2015');
+         * __.date.print();
+         * __.date.print('2015/03/25');
+         * __.date.print(1433624248201);
+         *__.date.print('05/02/2015 3:15:00 PM');
+         * __.date.print('2015-03-25T12:00:00');
+         * __.date.print('2015');
          *
          */
         print: function (d) {
             d = (d)? new Date(d) : new Date();
+
             return {
                 d: d,                                   // Date {Sat Jun 06 2015 00:00:00 GMT-0400 (Eastern Standard Time)}
                 timeStamp: d.getTime(),                 // 1433563200000
@@ -1511,16 +1726,17 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example:
-         * __.dates.setFuture('9/25/2018', {day: 3});
-         * __.dates.setFuture('10/1/2025', {day: 15}, 'string'));
-         *__.dates.setFuture('2025', {day: 2}, 'dateString');
+         * __.date.setFuture('9/25/2018', {day: 3});
+         * __.date.setFuture('10/1/2025', {day: 15}, 'string'));
+         *__.date.setFuture('2025', {day: 2}, 'dateString');
          *
          */
         setFuture: function (time, forward, format) {
+            var newDate, conversion;
             time = (time)? this.print(time) : this.print();
             forward = (typeof forward === 'object')? forward : {};
 
-            var conversion = {
+            conversion = {
                 year: (forward.year && typeof forward.year === 'number')? time.d.getFullYear() + forward.year : time.d.getFullYear(),
                 month: (forward.month && typeof forward.month === 'number')? time.d.getMonth() + forward.year : time.d.getMonth(),
                 day: (forward.day && typeof forward.day === 'number')? time.d.getDate() + forward.day : time.d.getDate(),
@@ -1529,7 +1745,8 @@ exports.date = (function () {
                 min: (forward.min && typeof forward.min === 'number')? time.d.getMinutes() + forward.min :  time.d.getMinutes(),
                 sec: (forward.sec && typeof forward.sec === 'number')? time.d.getSeconds() + forward.sec :  time.d.getSeconds()
             };
-            var newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+            newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+
             return (format)? this.print(newDate)[format] : this.print(newDate);
         },
 
@@ -1545,16 +1762,17 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example:
-         * __.dates.setPast('9/25/2012', {day: 3});
-         * __.dates.setPast('10/1/2014', {day: 15}, 'isoString'));
-         * __.dates.setPast('2015-05-25T12:00:00', {hour: 2})
+         * __.date.setPast('9/25/2012', {day: 3, hour: 11});
+         * __.date.setPast('10/1/2014', {day: 15}, 'isoString');
+         * __.date.setPast('2015-05-25T12:00:00', {hour: 2})
          *
          */
         setPast: function (time, backward, format) {
+            var newDate, conversion;
             time = (time)? this.print(time) : this.print();
             backward = (typeof backward === 'object')? backward : {};
 
-            var conversion = {
+            conversion = {
                 year: (backward.year && typeof backward.year === 'number')? time.d.getFullYear() - backward.year : time.d.getFullYear(),
                 month: (backward.month && typeof backward.month === 'number')? time.d.getMonth() - backward.year : time.d.getMonth(),
                 day: (backward.day && typeof backward.day === 'number')? time.d.getDate() - backward.day : time.d.getDate(),
@@ -1563,7 +1781,8 @@ exports.date = (function () {
                 min: (backward.min && typeof backward.min === 'number')? time.d.getMinutes() - backward.min :  time.d.getMinutes(),
                 sec: (backward.sec && typeof backward.sec === 'number')? time.d.getSeconds() - backward.sec :  time.d.getSeconds()
             };
-            var newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+
+            newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
             return (format)? this.print(newDate)[format] : this.print(newDate);
         },
 
@@ -1578,9 +1797,9 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example
-         * __.dates.future({day : 3});
-         * __.dates.future({week: 1}, 'dateString');
-         * __.dates.future({month:  2, day: 4, hour: 18 });
+         * __.date.future({day : 3});
+         * __.date.future({week: 1}, 'dateString');
+         * __.date.future({month:  2, day: 4, hour: 18 });
          *
          */
         future: function (forward, format) {
@@ -1613,9 +1832,9 @@ exports.date = (function () {
          * @returns {{years: number, months: number, weeks: number, days: number, hours: number, minutes: number, seconds: number}}
          *
          * @example
-         * __.dates.since('2015');
-         * __.dates.since('2015-04');
-         * __.dates.since('2015-05-25T12:00:00');
+         * __.date.since('2015');
+         * __.date.since('2015-04');
+         * __.date.since('2015-05-25T12:00:00');
          *
          */
         since: function (time) {
@@ -1642,8 +1861,8 @@ exports.date = (function () {
          * @returns {{years: number, months: number, weeks: number, days: number, hours: number, minutes: number, seconds: number}}
          *
          * @example
-         * __.dates.until('07/01/2016');
-         * __.dates.until('2020');
+         * __.date.until('07/01/2016');
+         * __.date.until('2020');
          *
          */
         until: function (time) {
@@ -1664,15 +1883,15 @@ exports.date = (function () {
         /**
          * timeSince
          * @description Returns the highest segment of time since
-         * a set date. Similiar since dates.since() except, only one
+         * a set date. Similiar since date.since() except, only one
          * value is returned.
          *
          * @param time
          * @returns {*}
          *
          * @examples
-         * __.dates.timeSince('06/10/2014');
-         *__.dates.timeSince('2000');
+         * __.date.timeSince('06/10/2014');
+         *__.date.timeSince('2000');
          *
          */
         timeSince: function(time){
@@ -1688,21 +1907,21 @@ exports.date = (function () {
                     return result;
                 }
             }
-            return false;
+            return {};
         },
 
         /**
          * timeUntil
          * @description Returns the highest segment of time since
-         * a set date. Similiar since dates.since() except, only one
+         * a set date. Similiar since date.since() except, only one
          * value is returned.
          *
          * @param time
          * @returns {*}
          *
          * @example
-         * __.dates.timeUntil('2026');
-         * __.dates.timeUntil('2018-06');
+         * __.date.timeUntil('2026');
+         * __.date.timeUntil('2018-06');
          *
          */
         timeUntil: function(time){
@@ -1719,13 +1938,12 @@ exports.date = (function () {
             }
             return result;
         }
-        // todo countdown
-        // todo formats
-        // todo validation
+
     };
 })();
+
 }).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/_date.js","/")
-},{"VCmEsw":4,"buffer":1}],6:[function(require,module,exports){
+},{"VCmEsw":4,"buffer":1}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * User: brendellya
@@ -1748,16 +1966,16 @@ exports.date = (function () {
 (function () {
    var obj = {};
 
+    // __.Date Module
     obj.date = require('./_date').date;
 
+  // __.Cookie Module
+  obj.cookie = require('./_cookie').cookie;
 
 
-    obj.noConflict = function(){
-        return obj;
-    };
 
     window.__ = obj;
 })();
 
-}).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_6b4677a8.js","/")
-},{"./_date":5,"VCmEsw":4,"buffer":1}]},{},[6])
+}).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_18606bd3.js","/")
+},{"./_cookie":5,"./_date":6,"VCmEsw":4,"buffer":1}]},{},[7])

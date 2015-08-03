@@ -1,5 +1,5 @@
 /**
- * _utils repo
+ * clear_utils repo
  * Dates Module
  *
  * @description
@@ -99,6 +99,7 @@ exports.date = (function () {
          */
         print: function (d) {
             d = (d)? new Date(d) : new Date();
+
             return {
                 d: d,                                   // Date {Sat Jun 06 2015 00:00:00 GMT-0400 (Eastern Standard Time)}
                 timeStamp: d.getTime(),                 // 1433563200000
@@ -143,10 +144,11 @@ exports.date = (function () {
          *
          */
         setFuture: function (time, forward, format) {
+            var newDate, conversion;
             time = (time)? this.print(time) : this.print();
             forward = (typeof forward === 'object')? forward : {};
 
-            var conversion = {
+            conversion = {
                 year: (forward.year && typeof forward.year === 'number')? time.d.getFullYear() + forward.year : time.d.getFullYear(),
                 month: (forward.month && typeof forward.month === 'number')? time.d.getMonth() + forward.year : time.d.getMonth(),
                 day: (forward.day && typeof forward.day === 'number')? time.d.getDate() + forward.day : time.d.getDate(),
@@ -155,7 +157,8 @@ exports.date = (function () {
                 min: (forward.min && typeof forward.min === 'number')? time.d.getMinutes() + forward.min :  time.d.getMinutes(),
                 sec: (forward.sec && typeof forward.sec === 'number')? time.d.getSeconds() + forward.sec :  time.d.getSeconds()
             };
-            var newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+            newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+
             return (format)? this.print(newDate)[format] : this.print(newDate);
         },
 
@@ -171,16 +174,17 @@ exports.date = (function () {
          * @returns {*}
          *
          * @example:
-         * __.date.setPast('9/25/2012', {day: 3});
+         * __.date.setPast('9/25/2012', {day: 3, hour: 11});
          * __.date.setPast('10/1/2014', {day: 15}, 'isoString');
          * __.date.setPast('2015-05-25T12:00:00', {hour: 2})
          *
          */
         setPast: function (time, backward, format) {
+            var newDate, conversion;
             time = (time)? this.print(time) : this.print();
             backward = (typeof backward === 'object')? backward : {};
 
-            var conversion = {
+            conversion = {
                 year: (backward.year && typeof backward.year === 'number')? time.d.getFullYear() - backward.year : time.d.getFullYear(),
                 month: (backward.month && typeof backward.month === 'number')? time.d.getMonth() - backward.year : time.d.getMonth(),
                 day: (backward.day && typeof backward.day === 'number')? time.d.getDate() - backward.day : time.d.getDate(),
@@ -189,7 +193,8 @@ exports.date = (function () {
                 min: (backward.min && typeof backward.min === 'number')? time.d.getMinutes() - backward.min :  time.d.getMinutes(),
                 sec: (backward.sec && typeof backward.sec === 'number')? time.d.getSeconds() - backward.sec :  time.d.getSeconds()
             };
-            var newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
+
+            newDate = new Date(conversion.year, conversion.month, (conversion.week || conversion.day), conversion.hour, conversion.min, conversion.sec, 0);
             return (format)? this.print(newDate)[format] : this.print(newDate);
         },
 
@@ -314,7 +319,7 @@ exports.date = (function () {
                     return result;
                 }
             }
-            return false;
+            return {};
         },
 
         /**
@@ -345,8 +350,6 @@ exports.date = (function () {
             }
             return result;
         }
-        // todo countdown
-        // todo formats
-        // todo validation
+
     };
 })();
