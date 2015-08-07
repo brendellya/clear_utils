@@ -124,37 +124,6 @@ exports.cookie = (function () {
         },
 
         /**
-         * cookie.delete
-         * @description Deletes a single cookie by name
-         *
-         * @param {string} name
-         *
-         * @example
-         * __.cookie.delete("today");
-         *
-         */
-        delete: function (name) {
-            this.set(name, '', {maxAge: -1});
-        },
-
-        /**
-         * cookie.deleteAll
-         * @description Deletes all cookies
-         *
-         * @example
-         * __.cookie.deleteAll();
-         *
-         */
-        deleteAll: function () {
-            var cookies = this.list();
-            var arr = Object.keys(cookies) || [];
-
-            arr.forEach(function (c) {
-                this.delete(c);
-            }.bind(this));
-        },
-
-        /**
          * cookie.list
          * @description Displays all cookies as an object
          * All values are decoded by default, add decode parameter
@@ -187,7 +156,7 @@ exports.cookie = (function () {
 
         /**
          * cookie.total
-         * @description Returns the total number of cookies
+         * @description Returns the total number of cookies.
          *
          * @returns {number}
          *
@@ -200,6 +169,37 @@ exports.cookie = (function () {
             var arr = Object.keys(cookies) || [];
 
             return arr.length;
+        },
+
+        /**
+         * cookie.delete
+         * @description Deletes a single cookie by name
+         *
+         * @param {string} name
+         *
+         * @example
+         * __.cookie.delete("today");
+         *
+         */
+        delete: function (name) {
+            this.set(name, '', {maxAge: -1});
+        },
+
+        /**
+         * cookie.deleteAll
+         * @description Deletes all cookies
+         *
+         * @example
+         * __.cookie.deleteAll();
+         *
+         */
+        deleteAll: function () {
+            var cookies = this.list();
+            var arr = Object.keys(cookies) || [];
+
+            arr.forEach(function (c) {
+                this.delete(c);
+            }.bind(this));
         }
     }
 
