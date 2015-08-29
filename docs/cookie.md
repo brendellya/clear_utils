@@ -44,8 +44,10 @@ Default value: empty
 Returns decoded cookie value if it exists. Set `decode` param to false, to retrieve encoded value.
 
 ````javascript
-__.cookie.get("tea"); // Returns decode value
-__.cookie.get("url", false); // Returns encoded value
+__.cookie.get("url"); 
+// returns  "https://github.com/brendellya/clear_utils"
+__.cookie.get("url", false);
+// returns encoded value: "https%3A%2F%2Fgithub.com%2Fbrendellya%2Fclear_utils"
 ````
 
 ##### cookie.check
