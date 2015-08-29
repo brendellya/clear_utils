@@ -1397,19 +1397,38 @@ process.chdir = function (dir) {
 },{"VCmEsw":4,"buffer":1}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * Created by Brendellya on 6/1/2015.
+ * clear_utils repo
+ * Cookie Module
+ *
+ * @description
+ * Perform simple cookie creation & management
+ * Module can be copied/pasted and used as a standalone
+ * module.
+ *
+ * Use with complete library of assign module to a new
+ * variable
+ *
+ * @example
+ * var myUtils = (function(){...))();
+ *
+ * Created by Brendellya on 8/1/2015.
  */
 
-
-/* Cookies */
 exports.cookie = (function () {
 
+    /*
+       Uses Date Object to set new UTC date
+    */
     var expiry = function (time) {
         var d = new Date(time);
         var expires = d.toUTCString();
 
         return (expires !== 'Invalid Date') ? d.toUTCString() : null;
     };
+
+    /*
+        Trim white space
+    */
     var trimStr = function (str) {
         return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
     };
@@ -1425,6 +1444,7 @@ exports.cookie = (function () {
             DAY: 86400,
             YEAR: 86400 * 365
         },
+
         /**
          * cookie.set
          * @description Creates a new cookie.
@@ -1460,11 +1480,11 @@ exports.cookie = (function () {
             };
 
             // Set Cookie
-            document.cookie = cookie.name + '=' + cookie.value
-                + cookie.expires + cookie.maxAge
-                + cookie.path + cookie.domain
-                + cookie.secure
-                + ';';
+            document.cookie = cookie.name + '=' + cookie.value +
+                cookie.expires + cookie.maxAge +
+                cookie.path + cookie.domain +
+                cookie.secure +
+                ';';
         },
 
         /**
@@ -1502,37 +1522,6 @@ exports.cookie = (function () {
         },
 
         /**
-         * cookie.delete
-         * @description Deletes a single cookie by name
-         *
-         * @param {string} name
-         *
-         * @example
-         * __.cookie.delete("today");
-         *
-         */
-        delete: function (name) {
-            this.set(name, '', {maxAge: -1});
-        },
-
-        /**
-         * cookie.deleteAll
-         * @description Deletes all cookies
-         *
-         * @example
-         * __.cookie.deleteAll();
-         *
-         */
-        deleteAll: function () {
-            var cookies = this.list();
-            var arr = Object.keys(cookies) || [];
-
-            arr.forEach(function (c) {
-                this.delete(c);
-            }.bind(this));
-        },
-
-        /**
          * cookie.list
          * @description Displays all cookies as an object
          * All values are decoded by default, add decode parameter
@@ -1565,7 +1554,7 @@ exports.cookie = (function () {
 
         /**
          * cookie.total
-         * @description Returns the total number of cookies
+         * @description Returns the total number of cookies.
          *
          * @returns {number}
          *
@@ -1575,9 +1564,40 @@ exports.cookie = (function () {
          */
         total: function(){
             var cookies = this.list();
-            var keys = Object.keys(cookies) || [];
+            var arr = Object.keys(cookies) || [];
 
-            return keys.length;
+            return arr.length;
+        },
+
+        /**
+         * cookie.delete
+         * @description Deletes a single cookie by name
+         *
+         * @param {string} name
+         *
+         * @example
+         * __.cookie.delete("today");
+         *
+         */
+        delete: function (name) {
+            this.set(name, '', {maxAge: -1});
+        },
+
+        /**
+         * cookie.deleteAll
+         * @description Deletes all cookies
+         *
+         * @example
+         * __.cookie.deleteAll();
+         *
+         */
+        deleteAll: function () {
+            var cookies = this.list();
+            var arr = Object.keys(cookies) || [];
+
+            arr.forEach(function (c) {
+                this.delete(c);
+            }.bind(this));
         }
     }
 
@@ -1587,7 +1607,7 @@ exports.cookie = (function () {
 },{"VCmEsw":4,"buffer":1}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
- * _utils repo
+ * clear_utils repo
  * Dates Module
  *
  * @description
@@ -1977,5 +1997,5 @@ exports.date = (function () {
     window.__ = obj;
 })();
 
-}).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_18606bd3.js","/")
+}).call(this,require("VCmEsw"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_8ff1d60e.js","/")
 },{"./_cookie":5,"./_date":6,"VCmEsw":4,"buffer":1}]},{},[7])
