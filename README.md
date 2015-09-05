@@ -6,6 +6,9 @@ This is a lightweight, simple utility library that I created to solve some of my
 of writing javascript applications.  It's a project I hope to be helpful to me and if it helps others...great.
 This repo is a work in progress, and hopefully I can add more modules at a reasonable rate.
 
+## Browser Support
+All modern browsers that support ECMAScript 5+.  Polyfills can be used for older browsers.
+
 ### Modules
 - [Dates] (docs/date.md)
 - [Cookies] (docs/cookie.md)
