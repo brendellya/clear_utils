@@ -86,7 +86,7 @@ exports.date = (function () {
          * Can accept milliseconds or any single valid date format.
          *
          * @param d
-         * @returns {*}
+         * @returns {{}}
          *
          * @example
          * __.date.print();

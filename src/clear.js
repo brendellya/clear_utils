@@ -17,15 +17,16 @@
  */
 
 (function () {
-   var obj = {};
+    var obj = {};
 
     // __.Date Module
     obj.date = require('./_date').date;
 
-  // __.Cookie Module
-  obj.cookie = require('./_cookie').cookie;
+    // __.Cookie Module
+    obj.cookie = require('./_cookie').cookie;
 
-
+    obj.storage = require('./_storage').storage;
+    obj.session = require('./_session').session;
 
     window.__ = obj;
 })();

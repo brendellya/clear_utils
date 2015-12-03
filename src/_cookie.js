@@ -92,7 +92,7 @@ exports.cookie = (function () {
         /**
          * cookie.get
          * @description Returns decoded cookie value if it exists.
-         * Used decode param to false, to retrieve encoded value.
+         * Set parse param to false to retrieve encoded value.
          *
          * @param {string} name
          * @param {boolean} decode

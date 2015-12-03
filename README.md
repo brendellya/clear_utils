@@ -11,6 +11,8 @@ This repo is a work in progress, and hopefully I can add more modules at a reaso
 - [Cookies] (docs/cookie.md)
 - LocalStorage (coming soon)
 - SessionStorage (coming soon)
+- Device (comsin soon)
+- Events (coming soon)
 
 ### Usage
 For quick installation just add the compiled/minified javascript to any project--all functionality will be available.  
