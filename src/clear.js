@@ -25,6 +25,7 @@
     // __.Cookie Module
     obj.cookie = require('./_cookie').cookie;
 
+    // __.Storage & __.Session Modules
     obj.storage = require('./_storage').storage;
     obj.session = require('./_session').session;
 
