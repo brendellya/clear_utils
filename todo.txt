@@ -1,0 +1,35 @@
+clear_utils Roadmap
+
+Dates
+        // todo countdown
+        // todo formats
+        // todo validation
+        // todo date.valueOf
+        // todo date format function:
+
+Times
+
+
+Storage/session
+        // todo on events
+
+//todo add successcallback,
+    /*
+    https://developer.mozilla.org/en-US/docs/Web/API/StorageEvent
+     https://mozilla.github.io/localForage/#localforage
+     http://chrisberkhout.com/blog/localstorage-errors/
+
+        var exception;
+        var repeat = function(str, x) { return new Array(x+1).join(str); };
+        var too_big = repeat("x", 12*1024*1024/2); // each JS character is 2 bytes
+        localStorage.clear();
+        try {
+          localStorage.setItem("test", too_big);
+        } catch (e) {
+          exception = e;
+        }
+     */
+Device
+
+Misc
+        // Throttle/debounce

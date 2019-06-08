@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Clear Utils</title>
+    <style>
+    </style>
+    <script src="dist/clear.js"></script>
+</head>
+<body>
+
+
+<article class="markdown-body entry-content" itemprop="mainContentOfPage">
+    <h1>clear_utils</h1>
+
+    <p>A modular utilities library--made for common auxiliary problems. Easily set Dates, Cookies, and more coming
+        soon.</p>
+
+    <h2>Description</h2>
+
+    <p>This is a lightweight, simple utility library that I created to solve some of my common time-sink aspects
+        of writing javascript applications. It's a project I hope to be helpful to me and if it helps others...great.
+        This repo is a work in progress, and hopefully I can add more modules at a reasonable rate.</p>
+
+    <h3>Modules</h3>
+
+    <ul>
+        <li><a href="/brendellya/clear_utils/blob/master/docs/date.md">Dates</a></li>
+        <li><a href="/brendellya/clear_utils/blob/master/docs/cookie.md">Cookies</a></li>
+        <li>LocalStorage (coming soon)</li>
+        <li>SessionStorage (coming soon)</li>
+    </ul>
+
+
+</article>
+
+
+<div class="output">
+testing:
+</div>
+
+<script>
+window.addEventListener('storage', function(e) {
+  document.querySelector('.output').textContent = e.key;
+//  document.querySelector('.my-old').textContent = e.oldValue;
+//  document.querySelector('.my-new').textContent = e.newValue;
+//  document.querySelector('.my-url').textContent = e.url;
+//  document.querySelector('.my-storage').textContent = e.storageArea;
+
+    console.log("e: ", e);
+});
+</script>
+</body>
+</html>
